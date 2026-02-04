@@ -29,5 +29,24 @@ Using a dataset of **600 audio samples** (N=100 per language) across 6 languages
 * `Confusion-Matrix.png`: Visualization of semiotic overlap.
 * `Geometric-landscape.png`: t-SNE projection of the latent space.
 
+
+
+### ⚠️ Limitations
+While the confusion matrix demonstrates strong local separability, several constraints frame the interpretation of these results:
+
+1.  **Representation Anisotropy**: The weak linear correlation ($r \approx -0.21$) between Cosine Distance and Levenshtein Distance indicates that the model's latent space is highly anisotropic (the "Representation Cone" effect). While local neighborhoods are semantically meaningful (high KNN accuracy), global distances are distorted by the common dominant vector of human speech.
+2.  **Dataset Domain**: This study utilizes **Google FLEURS**, which consists of read speech. The clear articulation in read speech may inflate the model's performance compared to spontaneous, noisy speech found in real-world economic scenarios.
+3.  **Sample Size**: With $N=600$ (100 clips per language), the study is statistically significant for exploratory analysis but effectively a "low-resource" scenario in the context of Deep Learning.
+
+### 🚀 Future Research Directions
+
+**1. Layer-Wise Probing of Linguistic Hierarchy**
+Investigate the "Depth of Representation" by extracting embeddings from intermediate Transformer layers. The hypothesis is that early layers (1-12) cluster by **phonetic similarity** (acoustic surface form), while deeper layers (24+) cluster by **typological family** (prosodic/syntactic structure).
+
+**2. Disentanglement Analysis (Speaker vs. Language)**
+Apply t-SNE visualization colored by `Speaker_ID` rather than `Language_ID` to quantify the model's invariance to speaker identity. This measures the disentanglement of **linguistic content** from **paralinguistic features**.
+
+**3. Economic Gravity Model Integration**
+Utilize the derived "Acoustic Distance" as a novel instrumental variable in **Gravity Models of Trade**, testing if acoustic friction predicts labor market integration better than traditional text-based proxies.
 ---
 *A research study bridging Labor Economics (Linguistic distances, Migration Costs, etc.) and Audio Deep Learning.*
