@@ -1,0 +1,10 @@
+# Ignore the data folder (downloaded audio)
+data/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore local environment settings
+.vscode/
+.env
