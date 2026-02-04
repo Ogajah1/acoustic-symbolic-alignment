@@ -5,28 +5,28 @@ from datasets import load_dataset
 # --- CONFIGURATION ---
 DATASET_NAME = "google/fleurs"
 
-# FINAL TARGET LIST (6 Languages)
-# Dropped Portuguese to maintain European consistency.
+# 6 Languages (Romance, Germanic, Isolate)
+# Dropping Portuguese to keep the experiment clean (European focus)
 TARGET_LANGS = {
-    "es_419": "Spanish",    # LatAm Spanish (Close proxy for ES)
+    "es_419": "Spanish",    # LatAm Spanish (Proxy for ES)
     "ca_es":  "Catalan",
     "en_us":  "English",
-    "hu_hu":  "Hungarian",  # The Isolate Control
+    "hu_hu":  "Hungarian",  # The Control (Uralic)
     "it_it":  "Italian",
     "de_de":  "German"
 }
 
-SAMPLES_PER_LANG = 30
+# IMPROVEMENT: Increased from 30 to 100 for statistical significance
+SAMPLES_PER_LANG = 100
 OUTPUT_DIR = "data"
 
 def harvest_audio():
-    print(f"--- STARTING HARVEST ({len(TARGET_LANGS)} Languages) ---")
+    print(f"--- STARTING ROBUST HARVEST (N={SAMPLES_PER_LANG} per language) ---")
     
     for lang_code, lang_name in TARGET_LANGS.items():
-        print(f"\n[Stream] Connecting to Google FLEURS ({lang_name} - {lang_code})...")
+        print(f"\n[Stream] Connecting to {lang_name} ({lang_code})...")
         
         try:
-            # Load Dataset (Streaming)
             ds = load_dataset(
                 DATASET_NAME, 
                 lang_code, 
@@ -35,15 +35,18 @@ def harvest_audio():
                 trust_remote_code=True
             )
         except Exception as e:
-            print(f"   [Error] Could not connect to {lang_name}: {e}")
+            print(f"   [Error] Connection failed: {e}")
             continue
 
-        # Create Directory
+        # Setup Directory
         simple_code = lang_code.split("_")[0] 
+        # Fix for Hungarian code consistency
+        if simple_code == "hu": simple_code = "hu"
+        
         lang_dir = os.path.join(OUTPUT_DIR, simple_code)
         os.makedirs(lang_dir, exist_ok=True)
 
-        print(f"   -> Downloading {SAMPLES_PER_LANG} clips to '{lang_dir}'...")
+        print(f"   -> Downloading clips to '{lang_dir}'...")
         count = 0
         
         try:
@@ -57,14 +60,15 @@ def harvest_audio():
                 filename = os.path.join(lang_dir, f"{simple_code}_clip_{count}.wav")
                 sf.write(filename, audio_array, sample_rate)
                 
-                if count % 10 == 0 and count > 0:
-                    print(f"      ...saved {count} clips")
+                # Log progress
+                if count % 20 == 0 and count > 0:
+                    print(f"      ...saved {count}/{SAMPLES_PER_LANG}")
                 count += 1
                 
-            print(f"   [Done] Successfully saved {count} clips for {lang_name}")
+            print(f"   [Done] {lang_name} complete.")
             
         except Exception as e:
-             print(f"   [Error] Failed while downloading {lang_name}: {e}")
+             print(f"   [Error] Interrupted: {e}")
 
 if __name__ == "__main__":
     harvest_audio()

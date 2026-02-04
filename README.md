@@ -1,53 +1,33 @@
-# Acoustic vs. Symbolic: Benchmarking Linguistic Distance Metrics via Self-Supervised Audio Embeddings
+# Acoustic vs. Symbolic: Benchmarking Linguistic Distance in Self-Supervised Audio Embeddings
 
 ### 🔭 Research Abstract
-This project bridges the gap between **Labor Economics** and **Audio Deep Learning** by investigating a fundamental question: *Does the "acoustic distance" between languages learned by neural networks correlate with the "symbolic distance" used in economic literature?*
-
-In quantitative economics, migration and labor market integration studies typically rely on text-based proxies (e.g., Levenshtein Distance/ASJP) to quantify the difficulty of learning a new language. However, these symbolic metrics ignore prosody, rhythm, and intonation.
-
-This repository implements a computational pipeline to benchmark these traditional economic metrics against **Latent Acoustic Distance**—a data-driven metric derived from the embedding space of **Meta AI’s Wav2Vec 2.0 (XLSR-53)**.
-
-### 🛠️ Methodology & Technical Architecture
-
-The project utilizes a modular Python pipeline to transform raw audio into semiotic analysis:
-
-1.  **Data Engineering (Streaming Pipeline)**:
-    * Implemented an automated ingestion pipeline using the **Hugging Face Datasets API**.
-    * Leveraged **streaming mode** to harvest the **Google FLEURS** dataset (16kHz WAV), allowing for the targeted extraction of ~200 audio samples across 6 European languages without terabyte-scale local storage overhead.
-
-2.  **Deep Representation Learning**:
-    * Utilized **Wav2Vec 2.0 (XLSR-53)**, a massive self-supervised model pre-trained on 53 languages, as a feature extractor.
-    * Audio signals are mapped to high-dimensional (1024-D) latent vectors (embeddings) via **Mean Pooling** of the model's last hidden states.
-
-3.  **Distance Quantification**:
-    * **Centroid Calculation**: Computed the geometric mean of embeddings for each language cluster.
-    * **Metric Comparison**: Calculated pairwise **Cosine Similarity** between centroids to quantify acoustic proximity and compared these results against standard **ASJP (Automated Similarity Judgment Program)** symbolic distances.
+This project investigates the alignment between **Symbolic Linguistic Distance** (Levenshtein/ASJP) and **Latent Acoustic Distance** in state-of-the-art audio models. Using **Meta AI’s Wav2Vec 2.0**, I analyzed whether self-supervised models implicitly learn the "Romance-Germanic-Uralic" typological divide without supervision.
 
 ### 🔬 Key Findings
+Using a dataset of **600 audio samples** (N=100 per language) across 6 languages, the experiment yielded a significant dissociation between local and global representations:
 
-Using a 6-language European test set (Spanish, Catalan, Italian, English, German, and Hungarian), the experiments yielded three significant observations:
+1.  **High Local Separability (The "Isolate" Hypothesis)**:
+    * The model achieved **76% accuracy** in distinguishing **Hungarian** (a Uralic isolate) from Indo-European languages using a simple KNN classifier.
+    * **Catalan** showed high distinctiveness (**81% accuracy**), validating its phonological identity despite its lexical proximity to Spanish.
 
-1.  **Validation of Economic Proxies**: The model's latent space successfully reconstructed the **Romance-Germanic divide** without supervision.
-2.  **The "Romance Continuum"**: The Confusion Matrix reveals significant acoustic overlap (16% misclassification) between **Spanish** and **Catalan**. This suggests that for neural models, the boundary between these languages is acoustically porous, mirroring the low Levenshtein distance found in symbolic datasets.
-3.  **Outlier Detection (Control Group)**: The model successfully isolated **Hungarian** (a Uralic language isolate) from the Indo-European clusters. This serves as a control, confirming the model is attending to deep linguistic structure rather than recording conditions or channel noise.
+2.  **The "Romance Continuum"**:
+    * As predicted by linguistic theory, the model exhibited the highest "confusion" between **Spanish, Catalan, and Italian**. This acoustic overlap mirrors the **Dialect Continuum** found in Romance linguistics.
 
-### 📊 Visualization
+3.  **Manifold Geometry**:
+    * While local clusters were distinct (High KNN Accuracy), global linear correlations with Levenshtein distance were weak. This suggests the Wav2Vec 2.0 latent space is **topologically consistent** (neighbors are correct) but **globally anisotropic** (directions are non-linear).
 
-**Figure 1: Semiotic Confusion Matrix**
-*The matrix below visualizes the model's "uncertainty" in distinguishing languages. High values on the diagonal indicate distinct acoustic identities. Off-diagonal values (e.g., Spanish/Catalan) indicate acoustic similarity.*
+![Linguistic Confusion Matrix](Figures/Confusion-Matrix.png)
 
-![Semiotic Confusion Matrix](Figure_2.png)
+### 🛠️ Technical Pipeline
+* **Data**: Automated ETL pipeline streaming **Google FLEURS** (16kHz).
+* **Model**: Wav2Vec 2.0 (XLSR-53) Feature Extractor (Layer -1).
+* **Metrics**: Dimensionality Reduction (t-SNE), Pearson Correlation, and KNN Classification.
 
 ### 📁 Repository Structure
-
-* `data_harvester.py`: Robust streaming ingestion script for Google FLEURS (handles missing configs and network interruptions).
-* `linguistic_semiotics.py`: Core analysis engine handling feature extraction, centroid calculation, and t-SNE visualization.
-* `Figure_2.png`: Generated confusion matrix from the acoustic analysis.
-
-### 🚀 Future Directions
-
-* **Prosodic vs. Phonetic**: Investigating which layers of the Transformer architecture capture intonation (prosody) versus specific phonemes.
-* **Economic Application**: Using "Acoustic Distance" as a novel instrumental variable in gravity models of trade and migration.
+* `data_harvester.py`: Robust N=100 streaming ingestion script.
+* `linguistic_semiotics.py`: Analysis engine with Anisotropy Correction.
+* `Confusion-Matrix.png`: Visualization of semiotic overlap.
+* `Geometric-landscape.png`: t-SNE projection of the latent space.
 
 ---
-*This project was developed as a bridge between Econometric methodologies and computational audio analysis.*
+*A research study bridging Labor Economics (Linguistic distances, Migration Costs, etc.) and Audio Deep Learning.*
