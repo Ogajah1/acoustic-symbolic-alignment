@@ -44,7 +44,7 @@ While the confusion matrix demonstrates strong local separability, several const
 Investigate the "Depth of Representation" by extracting embeddings from intermediate Transformer layers. The hypothesis is that early layers (1-12) cluster by **phonetic similarity** (acoustic surface form), while deeper layers (24+) cluster by **typological family** (prosodic/syntactic structure).
 
 **2. Disentanglement Analysis (Speaker vs. Language)**
-Apply t-SNE visualization colored by `Speaker_ID` rather than `Language_ID` to quantify the model's invariance to speaker identity. This measures the disentanglement of **linguistic content** from **paralinguistic features**.
+Apply t-SNE visualization colored by `Speaker_ID` rather than `Language_ID` to quantify the model's invariance to speaker identity. This measures the disentanglement of **linguistic content** from **paralinguistic features**. 
 
 **3. Economic Gravity Model Integration**
 Utilize the derived "Acoustic Distance" as a novel instrumental variable in **Gravity Models of Trade**, testing if acoustic friction predicts labor market integration better than traditional text-based proxies.
