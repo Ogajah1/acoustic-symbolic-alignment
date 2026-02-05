@@ -64,7 +64,7 @@ The project utilises a modular Python pipeline to transform raw audio into semio
 | Language Family | Languages | Samples per Language |
 |-----------------|-----------|----------------------|
 | **Romance** | Spanish, Italian, Catalan | 100 each |
-| **Germanic** | German, Swedish | 100 each |
+| **Germanic** | German, English | 100 each |
 | **Uralic** | Hungarian | 100 |
 
 **Total Dataset**: 600 audio samples (16kHz, read speech from FLEURS)
@@ -231,7 +231,7 @@ While the confusion matrix demonstrates strong local separability, several const
 
 3. **Sample Size**: With N = 600 (100 clips per language), the study is statistically significant for exploratory analysis but effectively a "low-resource" scenario in the context of Deep Learning.
 
-4. **Language Selection Bias**: Focus on European languages (Romance, Germanic, Uralic) limits generalizability to global language diversity, particularly tonal languages (e.g., Mandarin, Thai) or non-Indo-European languages with distinct phonological systems.
+4. **Language Selection Bias**: Focus on European languages (Romance, Germanic, Uralic) limits generalisability to global language diversity, particularly tonal languages (e.g., Mandarin, Thai) or non-Indo-European languages with distinct phonological systems.
 
 ---
 
@@ -293,14 +293,6 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- **Google FLEURS Team** for providing the multilingual speech dataset
-- **Meta AI** for the Wav2Vec 2.0 XLSR-53 pre-trained model
-- **Hugging Face** for dataset and model hosting infrastructure
 
 ---
 
