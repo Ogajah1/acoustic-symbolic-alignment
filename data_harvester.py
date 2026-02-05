@@ -6,9 +6,8 @@ from datasets import load_dataset
 DATASET_NAME = "google/fleurs"
 
 # 6 Languages (Romance, Germanic, Isolate)
-# Dropping Portuguese to keep the experiment clean (European focus)
 TARGET_LANGS = {
-    "es_419": "Spanish",    # LatAm Spanish (Proxy for ES)
+    "es_419": "Spanish",   
     "ca_es":  "Catalan",
     "en_us":  "English",
     "hu_hu":  "Hungarian",  # The Control (Uralic)
@@ -16,7 +15,7 @@ TARGET_LANGS = {
     "de_de":  "German"
 }
 
-# IMPROVEMENT: Increased from 30 to 100 for statistical significance
+# of audio samples to harvest per language 
 SAMPLES_PER_LANG = 100
 OUTPUT_DIR = "data"
 

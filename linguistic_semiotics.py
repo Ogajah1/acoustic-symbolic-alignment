@@ -60,13 +60,13 @@ class SemioticAlignmentAnalyzer:
         """
         ROBUST LOADING: Uses soundfile directly to bypass Windows torchaudio bugs.
         """
-        # 1. Read file with soundfile
+        # 1. Load audio using soundfile (handles various formats and Windows issues)
         audio_array, sample_rate = sf.read(file_path)
         
-        # 2. Convert to Torch Tensor
+        # 2. Convert to PyTorch tensor
         waveform = torch.from_numpy(audio_array).float()
         
-        # 3. Standardize dimensions
+        # 3. Standardise shape: Ensure (Channels, Time) format
         if waveform.ndim == 1: waveform = waveform.unsqueeze(0) 
         elif waveform.ndim == 2: waveform = waveform.t() 
 
@@ -111,7 +111,7 @@ class SemioticAlignmentAnalyzer:
         CRITICAL FIX: Centers the data (Anisotropy Correction) before 
         calculating Cosine Distance.
         """
-        # 1. CENTER THE DATA (Remove the common "Speech" vector)
+        # 1. CENTERING (Anisotropy Correction)
         global_mean = np.mean(embeddings, axis=0)
         centered_embeddings = embeddings - global_mean
         
