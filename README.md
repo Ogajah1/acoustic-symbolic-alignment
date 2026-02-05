@@ -1,7 +1,8 @@
-![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
+![Python Version](https://img.shields.io/badge/python-3.9%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Data Source](https://img.shields.io/badge/dataset-Google_FLEURS-yellow)
 ![Model](https://img.shields.io/badge/model-Wav2Vec2_XLSR-red)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18496257.svg)](https://doi.org/10.5281/zenodo.18496257)
 
 # Acoustic vs. Symbolic: Benchmarking Linguistic Distance in Self-Supervised Audio Embeddings
 
@@ -265,12 +266,13 @@ If you find this analysis useful in your research, please cite this repository:
 
 ```bibtex
 @misc{acoustic-symbolic-alignment,
-  author = {Thompson Ogajah, T.},
+  author = {Tawiah, T.O.},
   title = {Acoustic vs. Symbolic: Benchmarking Linguistic Distance in Self-Supervised Audio Embeddings},
   year = {2026},
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\url{https://github.com/Ogajah1/acoustic-symbolic-alignment}}
+  howpublished = {\url{https://github.com/Ogajah1/acoustic-symbolic-alignment}},
+  doi = {10.5281/zenodo.18496257}
 }
 ```
 
